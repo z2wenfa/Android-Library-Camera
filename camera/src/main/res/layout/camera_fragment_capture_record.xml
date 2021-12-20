@@ -61,11 +61,16 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
             android:layout_weight="1">
 
-            <com.hyfun.camera.widget.BoxView
+            <ImageView
+                android:id="@+id/ivFrame"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="8dp"
+                android:background="@drawable/person" />
 
         </FrameLayout>
 
