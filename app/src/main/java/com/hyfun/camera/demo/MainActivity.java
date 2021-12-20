@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {
                         if (aBoolean) {
-                            FunCamera.capturePhoto2Record(MainActivity.this, 30, 10000);
+                            FunCamera.capturePhoto2Record(MainActivity.this, 30, 61000);
                         } else {
                             Toast.makeText(MainActivity.this, "授权失败", Toast.LENGTH_SHORT).show();
                         }

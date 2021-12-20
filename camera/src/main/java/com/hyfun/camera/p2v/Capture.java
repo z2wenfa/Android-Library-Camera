@@ -312,7 +312,7 @@ class Capture {
             mediaRecorder.setVideoSize(previewInfo.getVideoWidth(), previewInfo.getVideoHeight());
 //            mediaRecorder.setVideoEncodingBitRate(52 * defaultVideoFrameRate * 1024);
 //            mediaRecorder.setVideoEncodingBitRate(1400 * 1024);
-            mediaRecorder.setVideoEncodingBitRate(3000 * 1024);
+            mediaRecorder.setVideoEncodingBitRate(2400 * 1024);
             mediaRecorder.setAudioEncodingBitRate(65536);
             mediaRecorder.setAudioSamplingRate(44100);
         } catch (Exception e) {
