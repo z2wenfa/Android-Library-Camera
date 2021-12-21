@@ -3,6 +3,8 @@ package com.hyfun.camera.p2v;
 import android.annotation.SuppressLint;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 import com.hyfun.camera.R;
 import com.hyfun.camera.widget.AutoFitTextureView;
 import com.hyfun.camera.widget.CaptureButton;
+import com.hyfun.camera.widget.CaptureTimeView;
 
 /**
  * Created by HyFun on 2019/10/14.
@@ -41,6 +44,11 @@ public class CameraCaptureRecordFragment extends BaseFragment implements OnCamer
     private TextView viewTextInfo;
     private View viewNavigation;
 
+    private FrameLayout flCapture;
+    private ImageView ivCaptureButton;
+    private TextView tvCaptureTime;
+
+    private CaptureTimeView captureTimeView;
 
     public CameraCaptureRecordFragment(int mode, long duration) {
         this.mode = mode;
@@ -67,6 +75,11 @@ public class CameraCaptureRecordFragment extends BaseFragment implements OnCamer
         viewFocusView = view.findViewById(R.id.camera_capture_record_focus_view);
         viewTextInfo = view.findViewById(R.id.camera_capture_record_tv_info);
         viewNavigation = view.findViewById(R.id.camera_capture_record_view_navigation);
+
+        flCapture = view.findViewById(R.id.flCapture);
+        ivCaptureButton = view.findViewById(R.id.ivCaptureButton);
+        tvCaptureTime = view.findViewById(R.id.tvCaptureTime);
+        captureTimeView = view.findViewById(R.id.captureTimeView);
 
         // ——————————————————————————————————————初始化——————————————————————————————————————————
         final Capture capture = new Capture(surfaceView);
@@ -130,6 +143,14 @@ public class CameraCaptureRecordFragment extends BaseFragment implements OnCamer
 
         });
 
+        // 拍摄按钮
+        flCapture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeRecordStatusAndUI(capture);
+            }
+        });
+
         // 对焦
         surfaceView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -149,6 +170,93 @@ public class CameraCaptureRecordFragment extends BaseFragment implements OnCamer
 
         return view;
     }
+
+    /**
+     * 是否正在拍摄
+     */
+    private boolean isCapturing = false;
+
+    /**
+     * 上次拍摄按钮点击的时间
+     */
+    private long lastChangeRecordStatusTime = 0;
+
+    /**
+     * 拍摄持续时间
+     */
+    private long captureDuration = 0;
+
+    /**
+     * 修改拍摄状态与UI
+     */
+    private void changeRecordStatusAndUI(Capture capture) {
+
+        long nowTime = System.currentTimeMillis();
+        if (nowTime - lastChangeRecordStatusTime < 1000) {
+            return;
+        }
+
+        isCapturing = !isCapturing;
+        if (isCapturing) {
+            capture.captureRecordStart(cameraOrientationListener.getOrientation());
+            ivCaptureButton.setImageResource(R.mipmap.icon_end_capture);
+
+            captureTimeView.setVisibility(View.VISIBLE);
+            captureTimeView.start();
+        } else {
+            capture.captureRecordEnd();
+            ivCaptureButton.setImageResource(R.mipmap.icon_start_capture);
+
+            captureTimeView.setVisibility(View.INVISIBLE);
+        }
+
+//        changeCaptureTime(isCapturing);
+
+        lastChangeRecordStatusTime = System.currentTimeMillis();
+    }
+
+    /**
+     * 更新拍摄时间
+     *
+     * @param isCapturing
+     */
+    private void changeCaptureTime(boolean isCapturing) {
+        if (isCapturing) {
+            tvCaptureTime.setVisibility(View.VISIBLE);
+            captureDuration = 0;
+            tvCaptureTime.setText(timeCalculate(captureDuration));
+            captureTimeHandler.sendEmptyMessageDelayed(1, 1000);
+        } else {
+            tvCaptureTime.setVisibility(View.INVISIBLE);
+            captureTimeHandler.removeCallbacks(null);
+            captureTimeHandler.removeMessages(1);
+        }
+    }
+
+    private Handler captureTimeHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            captureDuration = captureDuration + 1;
+            tvCaptureTime.setText(timeCalculate(captureDuration));
+            captureTimeHandler.sendEmptyMessageDelayed(1, 1000);
+        }
+    };
+
+
+    public String timeCalculate(long ttime) {
+        long daysuuu, hoursuuu, minutesuuu, secondsuuu;
+        String daysT = "", restT = "";
+        daysuuu = (Math.round(ttime) / 86400);
+        hoursuuu = (Math.round(ttime) / 3600) - (daysuuu * 24);
+        minutesuuu = (Math.round(ttime) / 60) - (daysuuu * 1440) - (hoursuuu * 60);
+        secondsuuu = Math.round(ttime) % 60;
+        if (daysuuu == 1) daysT = String.format("%d day ", daysuuu);
+        if (daysuuu > 1) daysT = String.format("%d days ", daysuuu);
+        restT = String.format("%02d:%02d:%02d", hoursuuu, minutesuuu, secondsuuu);
+        return daysT + restT;
+    }
+
 
     @Override
     public void onResume() {

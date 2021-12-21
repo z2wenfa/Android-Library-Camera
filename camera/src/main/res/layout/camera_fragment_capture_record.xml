@@ -36,26 +36,45 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/status_bar_height" />
 
-            <LinearLayout
+
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp">
+                android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/camera_capture_record_iv_splash"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:padding="5dp"
-                    android:src="@drawable/camera_ic_capture_flash_off_24dp"
-                    android:tint="#ffffff" />
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
 
-            </LinearLayout>
+                    <ImageView
+                        android:id="@+id/camera_capture_record_iv_splash"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:padding="5dp"
+                        android:src="@drawable/camera_ic_capture_flash_off_24dp"
+                        android:tint="#ffffff" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvCaptureTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:text="00:00"
+                    android:textColor="@android:color/holo_red_light"
+                    android:textSize="22dp"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+
         </LinearLayout>
 
         <FrameLayout
@@ -63,6 +82,13 @@
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1">
+
+            <com.hyfun.camera.widget.CaptureTimeView
+                android:layout_width="40dp"
+                android:id="@+id/captureTimeView"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:layout_gravity="center_vertical|right" />
 
             <ImageView
                 android:id="@+id/ivFrame"
@@ -125,8 +151,28 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
+                        android:visibility="gone"
                         app:maxSeconds="10"
                         app:progressColor="#09BE5D" />
+
+                    <FrameLayout
+                        android:id="@+id/flCapture"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="20dp"
+                        android:background="@drawable/fun_camera_shape_background_circle_white">
+
+                        <ImageView
+                            android:id="@+id/ivCaptureButton"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:src="@mipmap/icon_start_capture" />
+                    </FrameLayout>
+
                 </FrameLayout>
 
                 <FrameLayout
