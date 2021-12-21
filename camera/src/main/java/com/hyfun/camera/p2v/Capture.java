@@ -1,5 +1,9 @@
 package com.hyfun.camera.p2v;
 
+import static android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT;
+
+import static com.hyfun.camera.FunCamera.DEFAULT_CAMERA;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -25,18 +29,22 @@ import java.util.List;
  * Email: 775183940@qq.com
  * Description: 拍摄照片  录制视频的
  */
-class Capture {
+public class Capture {
     private AutoFitTextureView surfaceView;
+
 
     public Capture(AutoFitTextureView surfaceView) {
         this.surfaceView = surfaceView;
 
         // 初始化
-        if (Camera.getNumberOfCameras() > 1) {
-            cameraId = Camera.CameraInfo.CAMERA_FACING_BACK;    // 后置摄像头
-        } else {
-            cameraId = Camera.CameraInfo.CAMERA_FACING_FRONT;   // 前置摄像头
-        }
+//        if (Camera.getNumberOfCameras() > 1) {
+//            cameraId = Camera.CameraInfo.CAMERA_FACING_BACK;    // 后置摄像头
+//        } else {
+//            cameraId = CAMERA_FACING_FRONT;   // 前置摄像头
+//        }
+
+        cameraId = DEFAULT_CAMERA;
+
         //  surfaceview不维护自己的缓冲区，等待屏幕渲染引擎将内容推送到用户面前
         surfaceView.setSurfaceTextureListener(textureListener);
     }
@@ -211,7 +219,7 @@ class Capture {
             return;
         }
         if (cameraId == Camera.CameraInfo.CAMERA_FACING_BACK) {
-            cameraId = Camera.CameraInfo.CAMERA_FACING_FRONT;
+            cameraId = CAMERA_FACING_FRONT;
         } else {
             cameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
         }
@@ -237,7 +245,7 @@ class Capture {
                     // 将图片保存在 DIRECTORY_DCIM 内存卡中
                     Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
                     Matrix matrix = new Matrix();
-                    if (cameraId == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+                    if (cameraId == CAMERA_FACING_FRONT) {
                         matrix.setRotate(-90 - orientation);
                         matrix.postScale(-1, 1);
                     } else {
@@ -296,7 +304,7 @@ class Capture {
         mediaRecorder.setCamera(camera);
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
-        if (cameraId == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+        if (cameraId == CAMERA_FACING_FRONT) {
             // 前置
             mediaRecorder.setOrientationHint(270 - orientation);
         } else {

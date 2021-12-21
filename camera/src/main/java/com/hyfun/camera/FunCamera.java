@@ -1,5 +1,7 @@
 package com.hyfun.camera;
 
+import static android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +22,11 @@ public class FunCamera {
     public static final String DATA = "DATA";
     // 原文件路径
     public static final String DATA_ORIGIN = "DATA_ORIGIN";
+
+    /**
+     * 默认开启的摄像头
+     */
+    public static int DEFAULT_CAMERA = CAMERA_FACING_FRONT;
 
     /**
      * 拍照

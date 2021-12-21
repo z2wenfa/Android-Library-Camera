@@ -147,7 +147,11 @@ public class CameraCaptureRecordFragment extends BaseFragment implements OnCamer
         flCapture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeRecordStatusAndUI(capture);
+                if (mode == CaptureButton.Mode.MODE_CAPTURE) {
+                    capture.capturePhoto(cameraOrientationListener.getOrientation());
+                } else {
+                    changeRecordStatusAndUI(capture);
+                }
             }
         });
 

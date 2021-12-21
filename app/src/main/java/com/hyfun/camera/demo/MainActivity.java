@@ -2,6 +2,7 @@ package com.hyfun.camera.demo;
 
 import android.Manifest;
 import android.content.Intent;
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textView = findViewById(R.id.textView);
+
+        FunCamera.DEFAULT_CAMERA = Camera.CameraInfo.CAMERA_FACING_BACK;
     }
 
     public void capture(View view) {
