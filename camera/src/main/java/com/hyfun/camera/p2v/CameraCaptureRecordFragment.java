@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hyfun.camera.FunCamera;
 import com.hyfun.camera.R;
 import com.hyfun.camera.widget.AutoFitTextureView;
 import com.hyfun.camera.widget.CaptureButton;
@@ -50,6 +51,8 @@ public class CameraCaptureRecordFragment extends BaseFragment implements OnCamer
 
     private CaptureTimeView captureTimeView;
 
+    private ImageView ivFrame;
+
     public CameraCaptureRecordFragment(int mode, long duration) {
         this.mode = mode;
         this.duration = duration;
@@ -81,6 +84,8 @@ public class CameraCaptureRecordFragment extends BaseFragment implements OnCamer
         tvCaptureTime = view.findViewById(R.id.tvCaptureTime);
         captureTimeView = view.findViewById(R.id.captureTimeView);
 
+        ivFrame = view.findViewById(R.id.ivFrame);
+
         // ——————————————————————————————————————初始化——————————————————————————————————————————
         final Capture capture = new Capture(surfaceView);
         capture.setOnCameraCaptureListener(this);
@@ -89,8 +94,16 @@ public class CameraCaptureRecordFragment extends BaseFragment implements OnCamer
         captureButton.setDuration(duration);
         if (mode == CaptureButton.Mode.MODE_CAPTURE) {
             viewTextInfo.setText("轻触拍照");
+
+            if (FunCamera.MASK_MODE == FunCamera.MASK_MODE_NONE || FunCamera.MASK_MODE == FunCamera.MASK_MODE_ONLY_VIDEO) {
+                ivFrame.setVisibility(View.INVISIBLE);
+            }
         } else if (mode == CaptureButton.Mode.MODE_RECORD) {
             viewTextInfo.setText("长按摄像");
+
+            if (FunCamera.MASK_MODE == FunCamera.MASK_MODE_NONE || FunCamera.MASK_MODE == FunCamera.MASK_MODE_ONLY_PHOTO) {
+                ivFrame.setVisibility(View.INVISIBLE);
+            }
         } else if (mode == CaptureButton.Mode.MODE_CAPTURE_RECORD) {
             viewTextInfo.setText("轻触拍照 长按摄像");
         }

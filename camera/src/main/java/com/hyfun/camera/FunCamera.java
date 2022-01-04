@@ -28,6 +28,17 @@ public class FunCamera {
      */
     public static int DEFAULT_CAMERA = CAMERA_FACING_FRONT;
 
+    public static int MASK_MODE_ONLY_PHOTO = 0; // 只有拍照有蒙版
+
+    public static int MASK_MODE_ONLY_VIDEO = 1; // 只有视频有蒙版
+
+    public static int MASK_MODE_ALL = 2; // 拍照视频都有蒙版
+
+    public static int MASK_MODE_NONE = 3; // 拍照、视频都没有蒙版
+
+    public static int MASK_MODE = MASK_MODE_ONLY_PHOTO; //
+
+
     /**
      * 拍照
      *
