@@ -68,7 +68,7 @@ public class CameraCaptureActivity extends AppCompatActivity implements CameraCa
             Luban.with(this)
                     .load(path)
                     .ignoreBy(300)
-                    .setTargetDir(getExternalFilesDir(Environment.DIRECTORY_DCIM).getAbsolutePath())
+                    .setTargetDir(getFilesDir().getAbsolutePath())
                     .setRenameListener(new OnRenameListener() {
                         @Override
                         public String rename(String filePath) {

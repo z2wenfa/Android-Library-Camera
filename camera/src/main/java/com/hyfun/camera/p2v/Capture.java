@@ -253,7 +253,7 @@ public class Capture {
                     }
                     bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
                     // 创建文件
-                    String parentPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath() + File.separator + "Camera";
+                    String parentPath = surfaceView.getContext().getFilesDir() + File.separator + "Camera";
                     File mediaStorageDir = new File(parentPath);
                     if (!mediaStorageDir.exists()) {
                         mediaStorageDir.mkdirs();
