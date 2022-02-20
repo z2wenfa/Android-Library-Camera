@@ -92,7 +92,7 @@ public class CameraCapturePreviewFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 // 通知刷新相册
-//                Util.notifyAlbumDataChanged(getContext(), new File(filePath));
+                Util.notifyAlbumDataChanged(getContext(), new File(filePath));
                 // 确认并返回
                 ((CameraCaptureActivity) getActivity()).returnPath(type, filePath);
             }
