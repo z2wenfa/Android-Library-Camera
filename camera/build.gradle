@@ -1,5 +1,7 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
 
+group = 'com.github.z2wenfa'
 android {
     compileSdkVersion 28
 
@@ -19,7 +21,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 dependencies {
