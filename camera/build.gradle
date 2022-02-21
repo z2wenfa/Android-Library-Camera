@@ -45,7 +45,7 @@ afterEvaluate {
 //
                 // You can then customize attributes of the publication as shown below.
                 groupId = 'com.github.z2wenfa'
-                artifactId = 'Android-Library-Camera'
+                artifactId = 'Android-Library-Camera:camera'
                 version = versionName
 
                 //                    // Applies the component for the release build variant.
@@ -73,5 +73,5 @@ dependencies {
     // 图片压缩 鲁班压缩
     implementation 'top.zibin:Luban:1.1.8'
     // 录音库：https://github.com/ideastudios/IdealRecorder
-    implementation'com.github.ideastudios:IdealRecorder:2.0.4'
+    implementation 'com.github.ideastudios:IdealRecorder:2.0.4'
 }
