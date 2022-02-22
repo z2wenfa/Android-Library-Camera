@@ -279,7 +279,7 @@ public class FunAudioDialogFragment extends DialogFragment {
                 AudioFormat.ENCODING_PCM_16BIT);
         idealRecorder
                 .setRecordConfig(recordConfig)
-                .setRecordFilePath(getContext().getExternalFilesDir(Environment.DIRECTORY_MUSIC).getAbsolutePath() + File.separator + Util.randomName() + ".wav")
+                .setRecordFilePath(context.getFilesDir() + File.separator + Util.randomName() + ".wav")
                 .setMaxRecordTime(Integer.MAX_VALUE)
                 .setVolumeInterval(200)
                 .setStatusListener(statusListener);
