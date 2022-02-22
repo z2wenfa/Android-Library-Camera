@@ -282,8 +282,7 @@ public class Capture {
      */
     public void captureRecordStart(int orientation) {
         // 生成视频文件
-        String parentPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath()
-                + File.separator + "Camera";
+        String parentPath = surfaceView.getContext().getFilesDir() + File.separator + "Camera";
         File parentFile = new File(parentPath);
         if (!parentFile.exists()) {
             parentFile.mkdirs();
